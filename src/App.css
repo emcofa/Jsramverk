@@ -1,38 +1,55 @@
 .App {
+  font-family: sans-serif;
+  text-align: center;
+  /* text-align: center; */
+}
+
+body {
+  background-color: #F1F1F1;
+}
+
+trix-editor {
+  position: relative;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+  background-color: rgba(255, 255, 255, 0.838);
+
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 1rem;
+  box-sizing: border-box;
+  align-items: center;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  line-height: 1.1875em;
+  letter-spacing: 0.00938em;
+  padding: 4rem;
+  max-width: 720px;
+  margin: 0 auto;
+  margin-top: 1rem;
+  height: 952px;
+}
+
+h1 {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+trix-toolbar {
+  display: none;
+  /* margin: 0 auto;
+  text-align: center; */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.trix-button {
+  text-align: center;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 0.5em;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
+  border: 0.5px solid rgba(0, 0, 0, 0.144);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.trix-button:hover {
+  background-color: rgb(246, 246, 246);
 }
