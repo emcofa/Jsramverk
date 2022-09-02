@@ -1,55 +1,58 @@
 .App {
-  font-family: sans-serif;
-  text-align: center;
-  /* text-align: center; */
+    font-family: sans-serif;
+    text-align: center;
+    /* text-align: center; */
 }
 
 body {
-  background-color: #F1F1F1;
+    background-color: #f1f1f1;
 }
 
 trix-editor {
-  position: relative;
-  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-  background-color: rgba(255, 255, 255, 0.838);
-
-  color: rgba(0, 0, 0, 0.87);
-  font-size: 1rem;
-  box-sizing: border-box;
-  align-items: center;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 400;
-  line-height: 1.1875em;
-  letter-spacing: 0.00938em;
-  padding: 4rem;
-  max-width: 720px;
-  margin: 0 auto;
-  margin-top: 1rem;
-  height: 952px;
+    position: relative;
+    transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+    background-color: rgba(255, 255, 255, 0.838);
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 1rem;
+    box-sizing: border-box;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    line-height: 1.1875em;
+    letter-spacing: 0.00938em;
+    max-width: 720px;
+    margin-top: 1rem;
+    height: 952px;
 }
 
 h1 {
-  text-align: center;
+    text-align: center;
 }
 
-
-trix-toolbar {
-  display: none;
-  /* margin: 0 auto;
-  text-align: center; */
+.heading {
+    background-color: #0047ab;
+    color: #fff;
+    margin-top: 0;
+    position: relative;
+    padding: 1em;
 }
+
+.trix-container {
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
 
 .trix-button {
-  text-align: center;
-  margin: 0 auto;
-  background-color: #fff;
-  border-radius: 4px;
-  padding: 0.5em;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  cursor: pointer;
-  border: 0.5px solid rgba(0, 0, 0, 0.144);
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 4px;
+    padding: 0.5em;
+    cursor: pointer;
+    border: 0.5px solid rgba(0, 0, 0, 0.144);
+    margin-bottom: 10px;
 }
 
 .trix-button:hover {
-  background-color: rgb(246, 246, 246);
+    background-color: rgb(246, 246, 246);
 }
