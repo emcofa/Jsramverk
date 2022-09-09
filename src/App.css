@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
 .App {
     font-family: sans-serif;
     text-align: center;
-    /* text-align: center; */
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -19,9 +21,10 @@ trix-editor {
     font-weight: 400;
     line-height: 1.1875em;
     letter-spacing: 0.00938em;
-    max-width: 720px;
+    /* max-width: 720px; */
     margin-top: 1rem;
     height: 952px;
+    text-align: left;
 }
 
 h1 {

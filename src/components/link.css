@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+
+.link{
+    color:rgb(25, 28, 108);
+    text-decoration: none;
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+.link:hover{
+    color:rgba(50, 52, 104, 0.448);
+    transition: 0.1s all;
+}
