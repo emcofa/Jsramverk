@@ -88,7 +88,6 @@ export default function UpdateDoc({ submitFunction, docs }) {
             <TrixEditor
                 className="trix-content"
                 autoFocus={true}
-                placeholder="Write something..."
                 name="html"
             />
         </div >

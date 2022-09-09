@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 export default function NewDoc({ submitFunction }) {
     const [newDoc, setNewDoc] = useState({});
 
-    console.log(newDoc)
 
     function setEditorContent(content) {
         let element = document.querySelector("trix-editor");
@@ -57,9 +56,6 @@ export default function NewDoc({ submitFunction }) {
                 className="trix-content"
                 autoFocus={true}
                 placeholder="Write something..."
-            // value={newDoc}
-            // value=""
-            // onChange={changeHandler}
             />
         </div>
     );
