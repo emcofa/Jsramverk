@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto+Mono&display=swap');
 
 .App {
     font-family: sans-serif;
@@ -8,6 +8,10 @@
 
 body {
     background-color: #f1f1f1;
+}
+
+h1 {
+    font-family: 'Roboto Mono', monospace;
 }
 
 trix-editor {
@@ -21,7 +25,6 @@ trix-editor {
     font-weight: 400;
     line-height: 1.1875em;
     letter-spacing: 0.00938em;
-    /* max-width: 720px; */
     margin-top: 1rem;
     height: 952px;
     text-align: left;
@@ -32,11 +35,12 @@ h1 {
 }
 
 .heading {
-    background-color: #0047ab;
-    color: #fff;
+    background-color: #fff;
+    color: rgb(0, 0, 0);
     margin-top: 0;
     position: relative;
     padding: 1em;
+    text-align: left;
 }
 
 .trix-container {

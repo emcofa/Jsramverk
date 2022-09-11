@@ -39,7 +39,7 @@ export default function UpdateDoc({ submitFunction, docs }) {
 
         let idDoc = getCurrentDoc._id
         let nameDoc = getCurrentDoc.name
-        let htmlDoc = element.value
+        let htmlDoc = element.innerHTML
         let nameAndText = {
             name: nameDoc,
             html: htmlDoc
@@ -76,10 +76,10 @@ export default function UpdateDoc({ submitFunction, docs }) {
                 <select id="select"
                     onChange={twoCalls} value="value"
                 >
-                    <option className="option" value="-99" key="0">Select document</option>
+                    <option className="option" value="-99" key="0">{getCurrentDoc.name || "Select document"}</option>
                     {docs.map((doc, index) => <option id={doc._id} value={index} key={index}>{doc.name}</option>)}
                 </select>
-                <button className="btn" onClick={updateDocs} hidden>Save updates</button>
+                <button className="btn btn-margin" onClick={updateDocs} hidden>Save updates</button>
             </div>
             <div className="wrapper-container">
                 <h3>Document name:</h3>
