@@ -9,7 +9,6 @@ import Footer from './components/Footer'
 
 import docsModel from './models/docsModel';
 import {
-  HashRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
@@ -38,13 +37,11 @@ export default function App() {
         <h1 className="heading">Text Editor</h1>
       </div>
       <div className="trix-container">
-        <Router>
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route path="docs/new" element={<NewDoc submitFunction={fetchDocs} />} />
-            <Route path="docs/update" element={<UpdateDoc submitFunction={fetchDocs} docs={docs} />} />
-          </Routes>
-        </Router>
+        <Routes>
+          <Route exact path="/" element={<Home data-testid="child" />} />
+          <Route path="docs/new" element={<NewDoc submitFunction={fetchDocs} />} />
+          <Route path="docs/update" element={<UpdateDoc submitFunction={fetchDocs} docs={docs} />} />
+        </Routes>
         <Footer />
       </div>
     </div>

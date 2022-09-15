@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "trix";
+// import "trix";
 import "trix/dist/trix.css";
 import { TrixEditor } from "react-trix";
 import docsModel from '../models/docsModel';
@@ -79,11 +79,11 @@ export default function UpdateDoc({ submitFunction, docs }) {
                     <option className="option" value="-99" key="0">{getCurrentDoc.name || "Select document"}</option>
                     {docs.map((doc, index) => <option id={doc._id} value={index} key={index}>{doc.name}</option>)}
                 </select>
-                <button className="btn btn-margin" onClick={updateDocs} hidden>Save updates</button>
+                <button className="btn btn-margin" data-testid="hidden" onClick={updateDocs} hidden>Save updates</button>
             </div>
             <div className="wrapper-container">
                 <h3>Document name:</h3>
-                <input className="title" onChange={handleChangeName} disabled={true} name="name" value={getCurrentDoc.name || ""} />
+                <input className="title" data-testid="title" onChange={handleChangeName} disabled={true} name="name" value={getCurrentDoc.name || ""} />
             </div>
             <TrixEditor
                 className="trix-content"
