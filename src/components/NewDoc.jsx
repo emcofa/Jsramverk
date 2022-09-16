@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import docsModel from '../models/docsModel';
 import { TrixEditor } from "react-trix";
-// import "trix";
 import "trix/dist/trix.css";
 import { Link } from "react-router-dom";
 
