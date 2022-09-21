@@ -12,12 +12,12 @@ const Home = () => {
             <ul>
                 <li>
                     <div>
-                        <Link className="btn btn-front" to="docs/new"> New document</Link>
+                        <Link className="btn btn-front" to="/docs/new"> New document</Link>
                     </div>
                 </li>
                 <li>
                     <div>
-                        <Link className="btn btn-front" to="docs/update">Edit document </Link>
+                        <Link className="btn btn-front" to="/docs/update">Edit document </Link>
                     </div>
                 </li>
             </ul>
