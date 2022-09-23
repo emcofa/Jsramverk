@@ -18,23 +18,18 @@ function changeSendToSocket(value) {
 }
 
 export default function UpdateDoc({ submitFunction, docs }) {
-    let [html, setHtml] = useState('');
+    const [html, setHtml] = useState('');
     const [getCurrentDoc, setCurrentDoc] = useState([]);
     const [socket, setSocket] = useState(null);
 
-
     useEffect(() => {
         if (socket && sendToSocket) {
-            socket.on("doc", (data) => {
-                setEditorContent(data.html, false);
-            });
 
             let data = {
                 _id: getCurrentDoc._id,
                 name: getCurrentDoc.name,
                 html: html
             };
-
             socket.emit("docsData", data);
         }
 
@@ -42,8 +37,17 @@ export default function UpdateDoc({ submitFunction, docs }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [getCurrentDoc]);
 
+
     useEffect(() => {
-        setSocket(io("http://localhost:8888"));
+        setSocket(io("https://jsramverk-editor-emfh21.azurewebsites.net"));
+
+        if (socket) {
+            socket.emit("create", getCurrentDoc["_id"]);
+
+            socket.on("docsData", (data) => {
+                setEditorContent(data.html, false);
+            });
+        }
 
         return () => {
             if (socket) {
@@ -51,8 +55,7 @@ export default function UpdateDoc({ submitFunction, docs }) {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
+    }, [getCurrentDoc]);
 
     useEffect(() => {
         if (socket) {
@@ -65,10 +68,9 @@ export default function UpdateDoc({ submitFunction, docs }) {
     }, [socket]);
 
     function handleChange(event) {
-        setHtml(event);
         if (updateCurrentDocOnChange) {
+            setHtml(event);
             const copy = Object.assign({}, getCurrentDoc);
-
             copy.html = html;
 
             setCurrentDoc(copy);
@@ -78,6 +80,8 @@ export default function UpdateDoc({ submitFunction, docs }) {
     }
 
     function setEditorContent(content, triggerChange) {
+        console.log("ändras");
+        // console.log(content);
         let element = document.querySelector("trix-editor");
 
         updateCurrentDocOnChange = triggerChange;
@@ -110,7 +114,7 @@ export default function UpdateDoc({ submitFunction, docs }) {
         await docsModel.update(nameAndText, idDoc);
 
         submitFunction();
-        alert(`Document ${nameDoc} successfully saved!`)
+        alert(`Updated document name to: ${nameDoc}`)
     }
 
     function handleChangeName(event) {
@@ -142,11 +146,11 @@ export default function UpdateDoc({ submitFunction, docs }) {
                     <option className="option" value="-99" key="0">{getCurrentDoc.name || "Select document"}</option>
                     {docs.map((doc, index) => <option id={doc._id} value={index} key={index}>{doc.name}</option>)}
                 </select>
-                <button className="btn btn-margin" data-testid="hidden" onClick={updateDocs} hidden>Save updates</button>
             </div>
             <div className="wrapper-container">
                 <h3>Document name:</h3>
                 <input className="title" data-testid="title" onChange={handleChangeName} disabled={true} name="name" value={getCurrentDoc.name || ""} />
+                <button className="btn btn-margin" data-testid="hidden" onClick={updateDocs} hidden>Save name</button>
             </div>
             <TrixEditor
                 className="trix-content"
