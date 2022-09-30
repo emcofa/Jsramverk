@@ -17,10 +17,14 @@ function changeSendToSocket(value) {
     sendToSocket = value;
 }
 
-export default function UpdateDoc({ submitFunction, docs }) {
+export default function UpdateDoc({ submitFunction, docs, user }) {
     const [html, setHtml] = useState('');
     const [getCurrentDoc, setCurrentDoc] = useState([]);
+    const [access, setAccess] = useState([]);
     const [socket, setSocket] = useState(null);
+    const filterAccess = [];
+
+    const filtered = docs.filter(doc => doc.owner === user.email);
 
     useEffect(() => {
         if (socket && sendToSocket) {
@@ -39,7 +43,8 @@ export default function UpdateDoc({ submitFunction, docs }) {
 
 
     useEffect(() => {
-        setSocket(io("https://jsramverk-editor-emfh21.azurewebsites.net"));
+        // setSocket(io("https://jsramverk-editor-emfh21.azurewebsites.net"));
+        setSocket(io("https://localhost:8888"));
 
         if (socket) {
             socket.emit("create", getCurrentDoc["_id"]);
@@ -80,8 +85,6 @@ export default function UpdateDoc({ submitFunction, docs }) {
     }
 
     function setEditorContent(content, triggerChange) {
-        console.log("ändras");
-        // console.log(content);
         let element = document.querySelector("trix-editor");
 
         updateCurrentDocOnChange = triggerChange;
@@ -92,29 +95,36 @@ export default function UpdateDoc({ submitFunction, docs }) {
     }
 
     async function fetchDoc() {
-
         let selectElement = document.querySelector('#select');
+        // console.log("selectElement", selectElement);
         let output = selectElement.options[selectElement.selectedIndex].value;
-        let singleDocId = docs[output]._id;
+        // console.log("output", output);
+        let singleDocId = filterAccess[output]._id;
 
         const singleDocs = await docsModel.getSingleDocs(singleDocId);
 
+        console.log("singledocs", singleDocs);
+        console.log("singledocs html", singleDocs.html);
         setEditorContent(singleDocs.html, true);
         setCurrentDoc(singleDocs);
     };
-
-    async function updateDocs() {
+    async function giveAccess() {
         let idDoc = getCurrentDoc._id
         let nameDoc = getCurrentDoc.name
         let htmlDoc = html
-        let nameAndText = {
+        let values = {
             name: nameDoc,
-            html: htmlDoc
+            html: htmlDoc,
+            owner: user.email,
+            allowed_user: access.access
         }
-        await docsModel.update(nameAndText, idDoc);
+
+        console.log(values);
+        // console.log("idDoc access", idDoc)
+        await docsModel.giveAccess(values, idDoc);
 
         submitFunction();
-        alert(`Updated document name to: ${nameDoc}`)
+        alert(`New changes saved`)
     }
 
     function handleChangeName(event) {
@@ -123,8 +133,27 @@ export default function UpdateDoc({ submitFunction, docs }) {
         setCurrentDoc({ ...getCurrentDoc, ...newObject });
     }
 
+    function handleAccess(event) {
+        let newObject = {};
+        newObject[event.target.name] = event.target.value;
+        setAccess({ ...access, ...newObject });
+    }
+
+    function showAccess() {
+        let input = document.querySelector(".access")
+        input.removeAttribute("hidden");
+        // document.querySelector(".title").disabled = false
+    }
+
+
     function button() {
         let btn = document.querySelector("button")
+        btn.removeAttribute("hidden");
+        document.querySelector(".title").disabled = false
+    }
+
+    function button2() {
+        let btn = document.querySelector(".button2")
         btn.removeAttribute("hidden");
         document.querySelector(".title").disabled = false
     }
@@ -132,7 +161,23 @@ export default function UpdateDoc({ submitFunction, docs }) {
     function twoCalls() {
         fetchDoc()
         button()
+        showAccess()
+        button2()
     };
+
+    // console.log(user.email)
+
+    docs.map(function (element) {
+        for (const key in element) {
+            if (key === "allowed_users") {
+                if (element.allowed_users.includes(user.email)) {
+                    filterAccess.push(element)
+                }
+            }
+        }
+    })
+
+    // console.log(filterAccess);
 
     return (
         <div className="container">
@@ -144,13 +189,17 @@ export default function UpdateDoc({ submitFunction, docs }) {
                     onChange={twoCalls} value="value"
                 >
                     <option className="option" value="-99" key="0">{getCurrentDoc.name || "Select document"}</option>
-                    {docs.map((doc, index) => <option id={doc._id} value={index} key={index}>{doc.name}</option>)}
+                    {filterAccess.map((doc, index) => <option id={doc._id} value={index} key={index}>{doc.name}</option>)}
                 </select>
             </div>
             <div className="wrapper-container">
                 <h3>Document name:</h3>
                 <input className="title" data-testid="title" onChange={handleChangeName} disabled={true} name="name" value={getCurrentDoc.name || ""} />
-                <button className="btn btn-margin" data-testid="hidden" onClick={updateDocs} hidden>Save name</button>
+                <button className="btn btn-margin" data-testid="hidden" onClick={giveAccess}>Save name</button>
+            </div>
+            <div className="wrapper-container">
+                <input className="access margin" onChange={handleAccess} placeholder="User email" name="access" hidden />
+                <button className="button2 btn btn-margin" onClick={giveAccess} hidden>Give user access</button>
             </div>
             <TrixEditor
                 className="trix-content"

@@ -5,16 +5,22 @@ const docsModel = {
     getAllDocs: async function getAllDocs() {
         const response = await fetch(`${docsModel.baseUrl}/`);
 
-        // console.log(window.location.href);
-
         const docs = await response.json();
 
         return docs.data
     },
     getSingleDocs: async function getSingleDocs(id) {
         const response = await fetch(`${docsModel.baseUrl}/docs/${id}`);
+        
 
         // console.log(window.location.href);
+
+        const docs = await response.json();
+
+        return docs.data
+    },
+    getUserDocuments: async function getUserDocuments(email) {
+        const response = await fetch(`${docsModel.baseUrl}/user/documents`);
 
         const docs = await response.json();
 
@@ -22,6 +28,18 @@ const docsModel = {
     },
     update: async function update(update, id) {
         const response = await fetch(`${docsModel.baseUrl}/update/${id}`, {
+            body: JSON.stringify(update),
+            headers: {
+                'content-type': 'application/json'
+            },
+            method: 'PUT'
+        });
+
+        const docs = await response.json();
+        return docs.data
+    },
+    giveAccess: async function giveAccess(update, id) {
+        const response = await fetch(`${docsModel.baseUrl}/access/${id}`, {
             body: JSON.stringify(update),
             headers: {
                 'content-type': 'application/json'

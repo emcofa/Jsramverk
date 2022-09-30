@@ -5,9 +5,8 @@ import "trix/dist/trix.css";
 import { Link } from "react-router-dom";
 
 
-export default function NewDoc({ submitFunction }) {
+export default function NewDoc({ submitFunction, user, token }) {
     const [newDoc, setNewDoc] = useState({});
-
 
     function setEditorContent(content) {
         let element = document.querySelector("trix-editor");
@@ -21,7 +20,7 @@ export default function NewDoc({ submitFunction }) {
     function handleChangeName(event) {
         let newObject = {};
         newObject[event.target.name] = event.target.value;
-        console.log(event.target.value);
+        // console.log(event.target.value);
         setNewDoc({ ...newDoc, ...newObject });
     }
 
@@ -31,8 +30,12 @@ export default function NewDoc({ submitFunction }) {
         setEditorContent(element.value);
         let insertNewDoc = {
             name: newDoc.name,
-            html: element.value
+            html: element.value,
+            owner: user.email,
+            allowed_user: [user._id]
         }
+
+        // console.log(insertNewDoc)
 
         await docsModel.saveDocs(insertNewDoc);
 

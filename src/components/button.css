@@ -36,7 +36,7 @@
     margin-left: 20px;
 }
 
-.btn-front{
+.btn-front {
     font-size: 112.5%;
     margin-bottom: 20px;
     display: inline-block;
@@ -44,7 +44,13 @@
 
 .btn:hover,
 .btn:focus {
-  background-color: #F082AC;
+    background-color: #F082AC;
+}
+
+.btn-register:hover,
+.btn-login:hover,
+.btn-register:focus {
+    opacity: 0.7;
 }
 
 button:disabled {
@@ -54,4 +60,57 @@ button:disabled {
 
 button:disabled:hover {
     background-color: #ccc;
+}
+
+.btn-register {
+    background-color: #ea4c4c;
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 700;
+    height: 40px;
+    line-height: 20px;
+    list-style: none;
+    outline: none;
+    padding: 10px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: color 100ms;
+    vertical-align: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+
+.btn-login {
+    background-color: #236d0e;
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 700;
+    height: 40px;
+    line-height: 20px;
+    list-style: none;
+    outline: none;
+    padding: 10px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: color 100ms;
+    vertical-align: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
