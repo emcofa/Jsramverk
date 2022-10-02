@@ -21,7 +21,32 @@ export default function App() {
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
 
+  async function register() {
+    await authModel.register(user);
+    alert("New user registered!")
+  }
+
+  async function login() {
+
+    const loginResult = await authModel.login(user);
+
+    console.log(loginResult.data.token);
+
+    if (loginResult.data.token) {
+      setToken(loginResult.data.token);
+    } else {
+      alert(loginResult.data.message)
+    }
+    setUser(loginResult);
+    return loginResult
+  }
+
+  function logout() {
+    window.location.reload(false);
+  }
+
   async function fetchDocs() {
+    console.log(token);
     const allDocs = await docsModel.getAllDocs(token)
 
     setDocs(allDocs);
@@ -41,28 +66,6 @@ export default function App() {
     setUser({ ...user, ...newObject });
   }
 
-  async function register() {
-    await authModel.register(user);
-  }
-
-  async function login() {
-    const loginResult = await authModel.login(user);
-
-    console.log(loginResult.data.message);
-
-    if (loginResult.data.token) {
-      setToken(loginResult.data.token);
-    } else {
-      alert(loginResult.data.message)
-    }
-    setUser(loginResult);
-    return loginResult
-  }
-
-  function logout() {
-    window.location.reload(false);
-  }
-
   return (
     <div>
       <div className="App">
@@ -70,7 +73,7 @@ export default function App() {
       </div>
       {token ?
         <div className="trix-container">
-          <button className='btn-register' onClick={() => logout()}>Logga ut</button>
+          <button className='btn' onClick={() => logout()}>Logga ut</button>
           <Routes>
             <Route exact path="/" element={<Home data-testid="child" />} />
             <Route path="/docs/new" element={<NewDoc submitFunction={fetchDocs} user={user.data} token={token} />} />
@@ -85,7 +88,7 @@ export default function App() {
           <p>Password</p>
           <input type="password" name="password" onChange={changeHandler} />
           <p></p>
-          <button className="btn-register btn-register" onClick={register}>Register</button>
+          <button className="btn-register" onClick={register}>Register</button>
           <button className="btn-margin btn-login" onClick={login}>Login</button>
         </div>
       }

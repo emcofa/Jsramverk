@@ -17,14 +17,15 @@ function changeSendToSocket(value) {
     sendToSocket = value;
 }
 
-export default function UpdateDoc({ submitFunction, docs, user }) {
+export default function UpdateDoc({ submitFunction, docs, user, token }) {
+    console.log(token);
     const [html, setHtml] = useState('');
     const [getCurrentDoc, setCurrentDoc] = useState([]);
     const [access, setAccess] = useState([]);
     const [socket, setSocket] = useState(null);
     const filterAccess = [];
 
-    const filtered = docs.filter(doc => doc.owner === user.email);
+    // const filtered = docs.filter(doc => doc.owner === user.email);
 
     useEffect(() => {
         if (socket && sendToSocket) {
@@ -32,7 +33,9 @@ export default function UpdateDoc({ submitFunction, docs, user }) {
             let data = {
                 _id: getCurrentDoc._id,
                 name: getCurrentDoc.name,
-                html: html
+                html: html,
+                owner: user.email,
+                allowed_user: access.access
             };
             socket.emit("docsData", data);
         }
@@ -43,9 +46,10 @@ export default function UpdateDoc({ submitFunction, docs, user }) {
 
 
     useEffect(() => {
-        // setSocket(io("https://jsramverk-editor-emfh21.azurewebsites.net"));
-        setSocket(io("https://localhost:8888"));
+        // setSocket(io("http://localhost:8888"));
+        setSocket(io("https://jsramverk-editor-emfh21.azurewebsites.net"));
 
+        console.log(getCurrentDoc["_id"])
         if (socket) {
             socket.emit("create", getCurrentDoc["_id"]);
 
@@ -96,32 +100,32 @@ export default function UpdateDoc({ submitFunction, docs, user }) {
 
     async function fetchDoc() {
         let selectElement = document.querySelector('#select');
-        // console.log("selectElement", selectElement);
         let output = selectElement.options[selectElement.selectedIndex].value;
-        // console.log("output", output);
         let singleDocId = filterAccess[output]._id;
 
-        const singleDocs = await docsModel.getSingleDocs(singleDocId);
+        const singleDocs = await docsModel.getSingleDocs(singleDocId, token);
 
-        console.log("singledocs", singleDocs);
-        console.log("singledocs html", singleDocs.html);
         setEditorContent(singleDocs.html, true);
         setCurrentDoc(singleDocs);
     };
     async function giveAccess() {
         let idDoc = getCurrentDoc._id
-        let nameDoc = getCurrentDoc.name
-        let htmlDoc = html
         let values = {
-            name: nameDoc,
-            html: htmlDoc,
-            owner: user.email,
             allowed_user: access.access
         }
 
-        console.log(values);
-        // console.log("idDoc access", idDoc)
-        await docsModel.giveAccess(values, idDoc);
+        await docsModel.giveAccess(values, idDoc, token);
+
+        submitFunction();
+        alert(`Giving user ${access.access} access to document`)
+    }
+    async function updateName() {
+        let idDoc = getCurrentDoc._id
+        let nameDoc = getCurrentDoc.name
+        let values = {
+            name: nameDoc
+        }
+        await docsModel.update(values, idDoc, token);
 
         submitFunction();
         alert(`New changes saved`)
@@ -147,13 +151,13 @@ export default function UpdateDoc({ submitFunction, docs, user }) {
 
 
     function button() {
-        let btn = document.querySelector("button")
+        let btn = document.querySelector(".btn-save")
         btn.removeAttribute("hidden");
         document.querySelector(".title").disabled = false
     }
 
     function button2() {
-        let btn = document.querySelector(".button2")
+        let btn = document.querySelector(".btn-access")
         btn.removeAttribute("hidden");
         document.querySelector(".title").disabled = false
     }
@@ -193,13 +197,12 @@ export default function UpdateDoc({ submitFunction, docs, user }) {
                 </select>
             </div>
             <div className="wrapper-container">
-                <h3>Document name:</h3>
-                <input className="title" data-testid="title" onChange={handleChangeName} disabled={true} name="name" value={getCurrentDoc.name || ""} />
-                <button className="btn btn-margin" data-testid="hidden" onClick={giveAccess}>Save name</button>
+                <input className="access margin" onChange={handleAccess} placeholder="User email" name="access" hidden />
+                <button className="btn-access btn2 btn-margin" onClick={giveAccess} hidden>Give user access</button>
             </div>
             <div className="wrapper-container">
-                <input className="access margin" onChange={handleAccess} placeholder="User email" name="access" hidden />
-                <button className="button2 btn btn-margin" onClick={giveAccess} hidden>Give user access</button>
+                <input className="title" data-testid="title" onChange={handleChangeName} disabled={true} name="name" value={getCurrentDoc.name || ""} />
+                <button className="btn-save btn1 btn-margin" data-testid="hidden" onClick={updateName} placeholder="Document name" hidden>Save document name</button>
             </div>
             <TrixEditor
                 className="trix-content"

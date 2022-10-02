@@ -3,6 +3,7 @@ import docsModel from '../models/docsModel';
 import { TrixEditor } from "react-trix";
 import "trix/dist/trix.css";
 import { Link } from "react-router-dom";
+import './button.css';
 
 
 export default function NewDoc({ submitFunction, user, token }) {
@@ -37,7 +38,7 @@ export default function NewDoc({ submitFunction, user, token }) {
 
         // console.log(insertNewDoc)
 
-        await docsModel.saveDocs(insertNewDoc);
+        await docsModel.saveDocs(insertNewDoc, token);
 
         submitFunction();
         alert("Document saved as new file, go to 'edit existing document' to edit it.")
@@ -49,10 +50,11 @@ export default function NewDoc({ submitFunction, user, token }) {
             <div className="wrapper-container">
                 <Link className="link" to="/">Back to front page</Link>
             </div>
-            <button className="btn" disabled={Object.keys(newDoc).length < 1 || newDoc.name === ""} onClick={saveDocs}>Save as new document</button>
             <div className="wrapper-container">
-                <h3>Document name:</h3>
-                <input className="title" onChange={handleChangeName} name="name" />
+                <button className="btn-save btn1" disabled={Object.keys(newDoc).length < 1 || newDoc.name === ""} onClick={saveDocs}>Save as new document</button>
+            </div>
+            <div className="wrapper-container">
+                <input className="title" onChange={handleChangeName} placeholder="Document name" name="name" />
             </div>
             <TrixEditor
                 className="trix-content"
