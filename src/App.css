@@ -63,3 +63,23 @@ h1 {
 .trix-button:hover {
     background-color: rgb(246, 246, 246);
 }
+
+.login-input {
+    border: none;
+    border-bottom: 2px solid #D1D1D4;
+    background: none;
+    padding: 10px;
+    padding-left: 24px;
+    font-weight: 700;
+    width: 50%;
+    transition: .2s;
+}
+
+
+
+.login-submit:active,
+.login-submit:focus,
+.login-submit:hover {
+    border-color: #6A679E;
+    outline: none;
+}

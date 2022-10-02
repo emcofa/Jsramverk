@@ -22,8 +22,12 @@ export default function App() {
   const [user, setUser] = useState({});
 
   async function register() {
-    await authModel.register(user);
-    alert("New user registered!")
+    let register = await authModel.register(user);
+    if (register.data) {
+      alert(register.data.message);
+    } else {
+      alert(register.errors.message);
+    }
   }
 
   async function login() {
@@ -73,7 +77,9 @@ export default function App() {
       </div>
       {token ?
         <div className="trix-container">
-          <button className='btn' onClick={() => logout()}>Logga ut</button>
+          {/* <div className="icon"> */}
+          {/* </div> */}
+          <p className="signout fa-solid fa-right-from-bracket" onClick={() => logout()}>Sign out</p>
           <Routes>
             <Route exact path="/" element={<Home data-testid="child" />} />
             <Route path="/docs/new" element={<NewDoc submitFunction={fetchDocs} user={user.data} token={token} />} />
@@ -81,15 +87,14 @@ export default function App() {
           </Routes>
         </div>
         :
-        <div className="container">
-          <h2>Login or register</h2>
+        <div className="container2">
           <p>Email</p>
-          <input type="email" name="email" onChange={changeHandler} />
+          <input className="login-input" type="email" name="email" onChange={changeHandler} />
           <p>Password</p>
-          <input type="password" name="password" onChange={changeHandler} />
+          <input className="login-input" type="password" name="password" onChange={changeHandler} />
           <p></p>
-          <button className="btn-register" onClick={register}>Register</button>
-          <button className="btn-margin btn-login" onClick={login}>Login</button>
+          <button className="btn-save btn1 login-submit" onClick={register}>Register</button>
+          <button className="btn-margin btn-access btn2 login-submit" onClick={login}>Login</button>
         </div>
       }
       <Footer />

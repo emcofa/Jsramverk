@@ -208,3 +208,10 @@ button:disabled:hover {
     -webkit-user-select: none;
     touch-action: manipulation;
 }
+
+
+.signout:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    transition: 0.3s ease;
+}
