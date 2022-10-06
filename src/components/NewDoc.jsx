@@ -33,12 +33,12 @@ export default function NewDoc({ submitFunction, user, token }) {
             name: newDoc.name,
             html: element.value,
             owner: user.email,
-            allowed_user: [user._id]
+            allowed_user: [user.email]
         }
 
         // console.log(insertNewDoc)
 
-        await docsModel.saveDocs(insertNewDoc, token);
+        await docsModel.graphQlSaveDocs(insertNewDoc, token);
 
         submitFunction();
         alert("Document saved as new file, go to 'edit existing document' to edit it.")
@@ -51,10 +51,10 @@ export default function NewDoc({ submitFunction, user, token }) {
                 <Link className="link" to="/">Back to front page</Link>
             </div>
             <div className="wrapper-container">
-                <button className="btn-save btn1" disabled={Object.keys(newDoc).length < 1 || newDoc.name === ""} onClick={saveDocs}>Save as new document</button>
+                <button className="btn-save btn1" hidden={Object.keys(newDoc).length < 1 || newDoc.name === ""} onClick={saveDocs}>Save as new document</button>
             </div>
             <div className="wrapper-container">
-                <input className="title" onChange={handleChangeName} placeholder="Document name" name="name" />
+                <input className="title" onChange={handleChangeName} placeholder="Insert document name" name="name" />
             </div>
             <TrixEditor
                 className="trix-content"

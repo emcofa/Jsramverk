@@ -1,0 +1,11 @@
+.custom-select {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+    color: #000;
+    border: none;
+    background-color: white;
+    padding: 0.5em;
+    border-radius: 8px;
+}

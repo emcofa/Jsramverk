@@ -76,10 +76,18 @@ h1 {
 }
 
 
-
 .login-submit:active,
 .login-submit:focus,
 .login-submit:hover {
     border-color: #6A679E;
+    outline: none;
+}
+
+.login-input:focus {
+    outline: none;
+}
+
+.access:focus,
+.title:focus {
     outline: none;
 }

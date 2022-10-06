@@ -45,13 +45,10 @@ export default function App() {
     return loginResult
   }
 
-  function logout() {
-    window.location.reload(false);
-  }
-
   async function fetchDocs() {
     console.log(token);
     const allDocs = await docsModel.getAllDocs(token)
+    // const allDocs = await docsModel.graphQlAllDocs(token)
 
     setDocs(allDocs);
   }
@@ -77,9 +74,6 @@ export default function App() {
       </div>
       {token ?
         <div className="trix-container">
-          {/* <div className="icon"> */}
-          {/* </div> */}
-          <p className="signout fa-solid fa-right-from-bracket" onClick={() => logout()}>Sign out</p>
           <Routes>
             <Route exact path="/" element={<Home data-testid="child" />} />
             <Route path="/docs/new" element={<NewDoc submitFunction={fetchDocs} user={user.data} token={token} />} />
@@ -93,8 +87,10 @@ export default function App() {
           <p>Password</p>
           <input className="login-input" type="password" name="password" onChange={changeHandler} />
           <p></p>
-          <button className="btn-save btn1 login-submit" onClick={register}>Register</button>
-          <button className="btn-margin btn-access btn2 login-submit" onClick={login}>Login</button>
+          <div className="button-container">
+            <button className="btn-save btn1 login-submit" onClick={register}>Register</button>
+            <button className="btn-margin btn-access btn2 login-submit" onClick={login}>Login</button>
+          </div>
         </div>
       }
       <Footer />

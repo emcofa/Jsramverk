@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import './button.css';
 import './style.css';
 import './link.css';
+import './select.css';
 
 let updateCurrentDocOnChange = false;
 let sendToSocket = false;
@@ -18,7 +19,6 @@ function changeSendToSocket(value) {
 }
 
 export default function UpdateDoc({ submitFunction, docs, user, token }) {
-    console.log(token);
     const [html, setHtml] = useState('');
     const [getCurrentDoc, setCurrentDoc] = useState([]);
     const [access, setAccess] = useState([]);
@@ -49,7 +49,6 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
         // setSocket(io("http://localhost:8888"));
         setSocket(io("https://jsramverk-editor-emfh21.azurewebsites.net"));
 
-        console.log(getCurrentDoc["_id"])
         if (socket) {
             socket.emit("create", getCurrentDoc["_id"]);
 
@@ -145,7 +144,9 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
 
     function showAccess() {
         let input = document.querySelector(".access")
+        let inputTitle = document.querySelector(".title")
         input.removeAttribute("hidden");
+        inputTitle.removeAttribute("hidden");
         // document.querySelector(".title").disabled = false
     }
 
@@ -189,20 +190,20 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
                 <Link className="link" to="/">Back to front page</Link>
             </div>
             <div className="wrapper-container">
-                <select id="select"
+                <select className="custom-select" id="select"
                     onChange={twoCalls} value="value"
                 >
-                    <option className="option" value="-99" key="0">{getCurrentDoc.name || "Select document"}</option>
+                    <option className="option" value="-99" key="0">{"Select document" || "Current doc - " + getCurrentDoc.name }</option>
                     {filterAccess.map((doc, index) => <option id={doc._id} value={index} key={index}>{doc.name}</option>)}
                 </select>
             </div>
             <div className="wrapper-container">
                 <input className="access margin" onChange={handleAccess} placeholder="User email" name="access" hidden />
-                <button className="btn-access btn2 btn-margin" onClick={giveAccess} hidden>Give user access</button>
+                <button className="btn-access btn2 btn-margin" onClick={giveAccess} hidden>Give access</button>
             </div>
             <div className="wrapper-container">
-                <input className="title" data-testid="title" onChange={handleChangeName} disabled={true} name="name" value={getCurrentDoc.name || ""} />
-                <button className="btn-save btn1 btn-margin" data-testid="hidden" onClick={updateName} placeholder="Document name" hidden>Save document name</button>
+                <input className="title" data-testid="title" onChange={handleChangeName} disabled={true} hidden name="name" value={getCurrentDoc.name || ""} />
+                <button className="btn-save btn1 btn-margin" data-testid="hidden" onClick={updateName} placeholder="Document name" hidden>Update name</button>
             </div>
             <TrixEditor
                 className="trix-content"

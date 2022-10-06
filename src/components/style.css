@@ -27,3 +27,26 @@
     margin-bottom: 20px;
     text-align: left;
 }
+
+.title,
+.access {
+    margin: 0 auto;
+    width: 200px;
+    color: #000;
+    border: none;
+    background-color: white;
+    padding: 0.5em;
+    border-radius: 8px;
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 5px 3px 3px 5px;
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
