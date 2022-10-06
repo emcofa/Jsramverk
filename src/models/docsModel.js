@@ -24,50 +24,9 @@ const docsModel = {
         });
 
 
-        // console.log(window.location.href);
-
         const docs = await response.json();
 
         return docs.data
-    },
-    giveAccess: async function giveAccess(update, id, token) {
-        const response = await fetch(`${docsModel.baseUrl}/access/${id}`, {
-            body: JSON.stringify(update),
-            headers: {
-                'content-type': 'application/json',
-                "x-access-token": token,
-            },
-            method: 'PUT'
-        });
-
-        const docs = await response.json();
-        return docs.data
-    },
-    update: async function update(update, id, token) {
-        const response = await fetch(`${docsModel.baseUrl}/update/${id}`, {
-            body: JSON.stringify(update),
-            headers: {
-                'content-type': 'application/json',
-                "x-access-token": token,
-            },
-            method: 'PUT'
-        });
-
-        const docs = await response.json();
-        return docs.data
-    },
-    saveDocs: async function saveDocs(newDoc, token) {
-        console.log(newDoc);
-        const response = await fetch(`${docsModel.baseUrl}/`, {
-            body: JSON.stringify(newDoc),
-            headers: {
-                'content-type': 'application/json',
-                "x-access-token": token,
-            },
-            method: 'POST'
-        });
-        const result = await response.json();
-        return result.data
     },
     graphQlSaveDocs: async function graphQlSaveDocs(newDoc, token) {
         fetch(`${docsModel.baseUrlGraphql}/graphql`, {
@@ -77,14 +36,50 @@ const docsModel = {
                 'Accept': 'application/json',
                 "x-access-token": token,
             },
-            body: JSON.stringify({ query: `mutation { insertDocument(name: "${newDoc.name}", html: "${newDoc.html}", owner: "${newDoc.owner}", allowed_users: "${newDoc.owner}") {
+            body: JSON.stringify({
+                query: `mutation { insertDocument(name: "${newDoc.name}", html: "${newDoc.html}", owner: "${newDoc.owner}", allowed_users: "${newDoc.owner}") {
                 name
             } }` })
         })
             .then(r => r.json())
             .then(data => console.log('data returned:', data));
 
-    }
+    },
+    graphQlGiveAccess: async function graphQlGiveAccess(update, id, token) {
+        fetch(`${docsModel.baseUrlGraphql}/graphql`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                "x-access-token": token,
+            },
+            body: JSON.stringify({
+                query: `mutation { giveAccess(_id: "${id}", allowed_users: "${update.allowed_user}") {
+                    allowed_users
+            } }` })
+        })
+            .then(r => r.json())
+            .then(data => console.log('data returned:', data));
+
+    },
+    graphQlUpdateName: async function graphQlUpdateName(update, id, token) {
+        fetch(`${docsModel.baseUrlGraphql}/graphql`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                "x-access-token": token,
+            },
+            body: JSON.stringify({
+                query: `mutation { updateName(_id: "${id}", name: "${update.name}") {
+                    name
+            } }` })
+        })
+            .then(r => r.json())
+            .then(data => console.log('data returned:', data));
+
+    },
+
 }
 
 export default docsModel;

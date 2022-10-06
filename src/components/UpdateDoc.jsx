@@ -113,7 +113,7 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
             allowed_user: access.access
         }
 
-        await docsModel.giveAccess(values, idDoc, token);
+        await docsModel.graphQlGiveAccess(values, idDoc, token);
 
         submitFunction();
         alert(`Giving user ${access.access} access to document`)
@@ -124,7 +124,7 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
         let values = {
             name: nameDoc
         }
-        await docsModel.update(values, idDoc, token);
+        await docsModel.graphQlUpdateName(values, idDoc, token);
 
         submitFunction();
         alert(`New changes saved`)
