@@ -6,6 +6,7 @@ import { io } from "socket.io-client";
 import { TrixEditor } from "react-trix";
 import "trix/dist/trix.css";
 import { Link } from "react-router-dom";
+import Pdf from './Pdf'
 import './button.css';
 import './style.css';
 import './link.css';
@@ -20,12 +21,11 @@ function changeSendToSocket(value) {
 
 export default function UpdateDoc({ submitFunction, docs, user, token }) {
     const [html, setHtml] = useState('');
+    const [text, setText] = useState("");
     const [getCurrentDoc, setCurrentDoc] = useState([]);
     const [access, setAccess] = useState([]);
     const [socket, setSocket] = useState(null);
     const filterAccess = [];
-
-    // const filtered = docs.filter(doc => doc.owner === user.email);
 
     useEffect(() => {
         if (socket && sendToSocket) {
@@ -75,9 +75,10 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socket]);
 
-    function handleChange(event) {
+    function handleChange(event, newText) {
         if (updateCurrentDocOnChange) {
             setHtml(event);
+            setText(newText);
             const copy = Object.assign({}, getCurrentDoc);
             copy.html = html;
 
@@ -97,7 +98,7 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
         element.editor.insertHTML(content);
     }
 
-    async function fetchDoc() {
+    async function fetchDoc(newText) {
         let selectElement = document.querySelector('#select');
         let output = selectElement.options[selectElement.selectedIndex].value;
         let singleDocId = filterAccess[output]._id;
@@ -147,7 +148,6 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
         let inputTitle = document.querySelector(".title")
         input.removeAttribute("hidden");
         inputTitle.removeAttribute("hidden");
-        // document.querySelector(".title").disabled = false
     }
 
 
@@ -163,14 +163,12 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
         document.querySelector(".title").disabled = false
     }
 
-    function twoCalls() {
-        fetchDoc()
+    function twoCalls(newText) {
+        fetchDoc(newText)
         button()
         showAccess()
         button2()
     };
-
-    // console.log(user.email)
 
     docs.map(function (element) {
         for (const key in element) {
@@ -182,18 +180,16 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
         }
     })
 
-    // console.log(filterAccess);
-
     return (
         <div className="container">
-            <div className="wrapper-container">
+            <div className="back-link">
                 <Link className="link" to="/">Back to front page</Link>
             </div>
             <div className="wrapper-container">
                 <select className="custom-select" id="select"
                     onChange={twoCalls} value="value"
                 >
-                    <option className="option" value="-99" key="0">{"Select document" || "Current doc - " + getCurrentDoc.name }</option>
+                    <option className="option" value="-99" key="0">{"Select document" || "Current doc - " + getCurrentDoc.name}</option>
                     {filterAccess.map((doc, index) => <option id={doc._id} value={index} key={index}>{doc.name}</option>)}
                 </select>
             </div>
@@ -201,10 +197,17 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
                 <input className="access margin" onChange={handleAccess} placeholder="User email" name="access" hidden />
                 <button className="btn-access btn2 btn-margin" onClick={giveAccess} hidden>Give access</button>
             </div>
-            <div className="wrapper-container">
+            <div className="wrapper-container2">
                 <input className="title" data-testid="title" onChange={handleChangeName} disabled={true} hidden name="name" value={getCurrentDoc.name || ""} />
                 <button className="btn-save btn1 btn-margin" data-testid="hidden" onClick={updateName} placeholder="Document name" hidden>Update name</button>
             </div>
+            {text ?
+                <div className="pdf-container">
+                    <Pdf getCurrentDoc={getCurrentDoc} text={text} />
+                </div>
+                :
+                <p></p>
+            }
             <TrixEditor
                 className="trix-content"
                 autoFocus={true}

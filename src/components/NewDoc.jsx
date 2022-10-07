@@ -11,7 +11,7 @@ export default function NewDoc({ submitFunction, user, token }) {
 
     function setEditorContent(content) {
         let element = document.querySelector("trix-editor");
-
+        console.log(content);
         element.value = "";
         element.editor.setSelectedRange([0, 0]);
         element.editor.insertHTML(content);
@@ -21,13 +21,12 @@ export default function NewDoc({ submitFunction, user, token }) {
     function handleChangeName(event) {
         let newObject = {};
         newObject[event.target.name] = event.target.value;
-        // console.log(event.target.value);
+
         setNewDoc({ ...newDoc, ...newObject });
     }
 
     async function saveDocs() {
         let element = document.querySelector("trix-editor");
-
         setEditorContent(element.value);
         let insertNewDoc = {
             name: newDoc.name,

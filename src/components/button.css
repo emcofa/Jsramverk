@@ -36,6 +36,10 @@
     margin-left: 20px;
 }
 
+.btn-margin-right {
+    margin-right: 20px;
+}
+
 .btn-front {
     font-size: 112.5%;
     margin-bottom: 20px;
@@ -151,6 +155,7 @@ button:disabled:hover {
     padding: 10px 16px;
     position: relative;
 }
+
 
 .btn1:hover{
     background-color: black;
