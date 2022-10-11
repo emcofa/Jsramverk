@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "html2canvas": "^1.4.1",
     "trix": "^2.0.0-beta.0"
   },
   "optionalDependencies": {

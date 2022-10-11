@@ -227,6 +227,6 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
                 name="html"
                 onChange={handleChange}
             />
-        </div >
+        </div>
     );
 }
