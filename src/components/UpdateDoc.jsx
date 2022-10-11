@@ -7,10 +7,13 @@ import { TrixEditor } from "react-trix";
 import "trix/dist/trix.css";
 import { Link } from "react-router-dom";
 import Pdf from './Pdf'
+import Contact from './Contact'
+
 import './button.css';
 import './style.css';
 import './link.css';
 import './select.css';
+import './email.css';
 
 let updateCurrentDocOnChange = false;
 let sendToSocket = false;
@@ -25,6 +28,7 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
     const [getCurrentDoc, setCurrentDoc] = useState([]);
     const [access, setAccess] = useState([]);
     const [socket, setSocket] = useState(null);
+    const [buttonPopup, setButtonPopup] = useState(false);
     const filterAccess = [];
 
     useEffect(() => {
@@ -117,8 +121,8 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
         await docsModel.graphQlGiveAccess(values, idDoc, token);
 
         submitFunction();
-        alert(`Giving user ${access.access} access to document`)
     }
+
     async function updateName() {
         let idDoc = getCurrentDoc._id
         let nameDoc = getCurrentDoc.name
@@ -163,7 +167,7 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
         document.querySelector(".title").disabled = false
     }
 
-    function twoCalls(newText) {
+    function multipleCalls(newText) {
         fetchDoc(newText)
         button()
         showAccess()
@@ -180,6 +184,13 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
         }
     })
 
+    function accessSet() {
+        giveAccess();
+        setButtonPopup(true);
+        alert(`Access set to user ${access.access}`)
+    };
+
+
     return (
         <div className="container">
             <div className="back-link">
@@ -187,7 +198,7 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
             </div>
             <div className="wrapper-container">
                 <select className="custom-select" id="select"
-                    onChange={twoCalls} value="value"
+                    onChange={multipleCalls} value="value"
                 >
                     <option className="option" value="-99" key="0">{"Select document" || "Current doc - " + getCurrentDoc.name}</option>
                     {filterAccess.map((doc, index) => <option id={doc._id} value={index} key={index}>{doc.name}</option>)}
@@ -195,7 +206,7 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
             </div>
             <div className="wrapper-container">
                 <input className="access margin" onChange={handleAccess} placeholder="User email" name="access" hidden />
-                <button className="btn-access btn2 btn-margin" onClick={giveAccess} hidden>Give access</button>
+                <button className="btn-access btn2 btn-margin" onClick={accessSet} hidden>Give access</button>
             </div>
             <div className="wrapper-container2">
                 <input className="title" data-testid="title" onChange={handleChangeName} disabled={true} hidden name="name" value={getCurrentDoc.name || ""} />
@@ -203,6 +214,8 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
             </div>
             {text ?
                 <div className="pdf-container">
+                    {/* <span className="email" onClick={() => setButtonPopup(true)}>Email an invitation?</span> */}
+                    <Contact user={user} getCurrentDoc={getCurrentDoc} access={access.access} setTrigger={setButtonPopup} trigger={buttonPopup} />
                     <Pdf getCurrentDoc={getCurrentDoc} text={text} />
                 </div>
                 :
