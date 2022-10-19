@@ -4,7 +4,7 @@ import docsModel from '../models/docsModel';
 import { io } from "socket.io-client";
 
 import { TrixEditor } from "react-trix";
-import "trix/dist/trix.css";
+// import "trix/dist/trix.css";
 import { Link } from "react-router-dom";
 import Pdf from './Pdf'
 import Contact from './Contact'
