@@ -34,8 +34,6 @@ export default function App() {
 
     const loginResult = await authModel.login(user);
 
-    console.log(loginResult.data.token);
-
     if (loginResult.data.token) {
       setToken(loginResult.data.token);
     } else {

@@ -7,12 +7,11 @@ import './icon.css';
 
 
 export default function Pdf(props) {
-
     // .trix-cintent
-    function getText() {
-        let html = document.querySelector(".trix-content")
-        return html.innerText
-    }
+    // function getText() {
+    //     let html = document.querySelector(".trix-content")
+    //     return html.innerText
+    // }
 
     function saveToPdf() {
         const input = document.querySelector(".trix-content");

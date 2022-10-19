@@ -182,6 +182,7 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
                 }
             }
         }
+        return filterAccess;
     })
 
     function accessSet() {
@@ -206,11 +207,11 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
             </div>
             <div className="wrapper-container">
                 <input className="access margin" onChange={handleAccess} placeholder="User email" name="access" hidden />
-                <button className="btn-access btn2 btn-margin" onClick={accessSet} hidden>Give access</button>
+                <button className="btn-access btn2 btn-margin" data-testid="hidden-give-access" onClick={accessSet} hidden>Give access</button>
             </div>
             <div className="wrapper-container2">
                 <input className="title" data-testid="title" onChange={handleChangeName} disabled={true} hidden name="name" value={getCurrentDoc.name || ""} />
-                <button className="btn-save btn1 btn-margin" data-testid="hidden" onClick={updateName} placeholder="Document name" hidden>Update name</button>
+                <button className="btn-save btn1 btn-margin" data-testid="hidden-update-name" onClick={updateName} placeholder="Document name" hidden>Update name</button>
             </div>
             {text ?
                 <div className="pdf-container">

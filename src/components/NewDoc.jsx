@@ -3,15 +3,18 @@ import docsModel from '../models/docsModel';
 import { TrixEditor } from "react-trix";
 import "trix/dist/trix.css";
 import { Link } from "react-router-dom";
+import Pdf from './Pdf'
 import './button.css';
 
 
 export default function NewDoc({ submitFunction, user, token }) {
     const [newDoc, setNewDoc] = useState({});
+    const [text, setText] = useState("");
+    const [html, setHtml] = useState("");
 
     function setEditorContent(content) {
         let element = document.querySelector("trix-editor");
-        console.log(content);
+
         element.value = "";
         element.editor.setSelectedRange([0, 0]);
         element.editor.insertHTML(content);
@@ -23,24 +26,28 @@ export default function NewDoc({ submitFunction, user, token }) {
         newObject[event.target.name] = event.target.value;
 
         setNewDoc({ ...newDoc, ...newObject });
+        console.log(newDoc);
+    }
+
+    function handleChange(event, newText) {
+        setText(newText);
+        setHtml(event);
     }
 
     async function saveDocs() {
         let element = document.querySelector("trix-editor");
+        console.log(element.value);
         setEditorContent(element.value);
         let insertNewDoc = {
             name: newDoc.name,
-            html: element.value,
+            html: html,
             owner: user.email,
             allowed_user: [user.email]
         }
-
-        // console.log(insertNewDoc)
-
         await docsModel.graphQlSaveDocs(insertNewDoc, token);
 
         submitFunction();
-        alert("Document saved as new file, go to 'edit existing document' to edit it.")
+        alert("Document saved as new file, go to 'edit document' to edit and give other users access to it .")
     }
 
 
@@ -55,10 +62,18 @@ export default function NewDoc({ submitFunction, user, token }) {
             <div className="wrapper-container">
                 <input className="title" onChange={handleChangeName} placeholder="Insert document name" name="name" />
             </div>
+            {text ?
+                <div className="pdf-container">
+                    <Pdf getCurrentDoc={newDoc} text={text} />
+                </div>
+                :
+                <p></p>
+            }
             <TrixEditor
                 className="trix-content"
                 autoFocus={true}
                 placeholder="Write something..."
+                onChange={handleChange}
             />
         </div>
     );

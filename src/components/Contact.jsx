@@ -16,8 +16,14 @@ const Contact = (props) => {
             }, (error) => {
                 console.log(error.text);
             });
+        alert("Email sent");
         event.target.reset();
     };
+
+    function submit(event) {
+        sendEmail(event)
+        props.setTrigger(false)
+    }
 
     return (props.trigger) ? (
         <section>
@@ -28,7 +34,7 @@ const Contact = (props) => {
                             Would you also like to email your invitation?
                         </strong>
                     </p>
-                    <form ref={form} onSubmit={sendEmail}>
+                    <form ref={form} onSubmit={submit}>
                         <input className="login-input" type="name" placeholder="Name" name="user_name" required />
                         <input className="login-input" type="email" defaultValue={props.access} name="user_email" required />
                         <input className="login-input" type="name" defaultValue={props.user.email} name="from_user" required hidden />

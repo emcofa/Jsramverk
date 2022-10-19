@@ -14,10 +14,18 @@ let TEST_DATA = [
   }
 ]
 
-test('renders header Welcome to Text Editor!', () => {
+
+test('renders email form', () => {
   render(<App />, { wrapper: MemoryRouter });
-  const headerElement = screen.getByText(/Welcome to Text Editor!/i);
-  expect(headerElement).toBeInTheDocument();
+  const emailElement = screen.getByText(/Email/i);
+  expect(emailElement).toBeInTheDocument();
+});
+
+
+test('renders login form', () => {
+  render(<App />, { wrapper: MemoryRouter });
+  const passwordElement = screen.getByText(/Password/i);
+  expect(passwordElement).toBeInTheDocument();
 });
 
 
@@ -36,13 +44,19 @@ test('Edit document button is on the page', () => {
 test('Make sure button is disabled when input of name is empty', () => {
   render(<NewDoc />, { wrapper: MemoryRouter });
   const saveButton = screen.getByText(/Save as new document/i);
-  expect(saveButton).toBeDisabled();
+  expect(saveButton).not.toBeVisible();
 });
 
 
-test('Make sure button is hidden when no doucment selected', () => {
+test('Make sure update name button is hidden when no doucment selected', () => {
   render(<UpdateDoc docs={TEST_DATA} />, { wrapper: MemoryRouter });
-  const button = screen.getByTestId(/hidden/i);
+  const button = screen.getByTestId(/hidden-update-name/i);
+  expect(button).not.toBeVisible();
+});
+
+test('Make sure give access button is hidden when no doucment selected', () => {
+  render(<UpdateDoc docs={TEST_DATA} />, { wrapper: MemoryRouter });
+  const button = screen.getByTestId(/hidden-give-access/i);
   expect(button).not.toBeVisible();
 });
 
