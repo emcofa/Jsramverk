@@ -7,7 +7,7 @@ import { TrixEditor } from "react-trix";
 // import "trix/dist/trix.css";
 import { Link } from "react-router-dom";
 import Pdf from './Pdf'
-import Contact from './Contact'
+import SendGrid from './SendGrid'
 
 import './button.css';
 import './style.css';
@@ -216,7 +216,7 @@ export default function UpdateDoc({ submitFunction, docs, user, token }) {
             {text ?
                 <div className="pdf-container">
                     {/* <span className="email" onClick={() => setButtonPopup(true)}>Email an invitation?</span> */}
-                    <Contact user={user} getCurrentDoc={getCurrentDoc} access={access.access} setTrigger={setButtonPopup} trigger={buttonPopup} />
+                    <SendGrid user={user} getCurrentDoc={getCurrentDoc} access={access.access} setTrigger={setButtonPopup} trigger={buttonPopup} />
                     <Pdf getCurrentDoc={getCurrentDoc} text={text} />
                 </div>
                 :

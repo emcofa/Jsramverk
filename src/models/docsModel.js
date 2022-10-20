@@ -28,6 +28,22 @@ const docsModel = {
 
         return docs.data
     },
+    postData: async function postData(usersName, email, access, doc, text) {
+        fetch(`${docsModel.baseUrl}/send`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                usersName,
+                email,
+                access,
+                doc,
+                text
+            })
+        }).then(res => res.json())
+            .then(data => console.log('data returned:', data));
+    },
     graphQlSaveDocs: async function graphQlSaveDocs(newDoc, token) {
         fetch(`${docsModel.baseUrlGraphql}/graphql`, {
             method: 'POST',
