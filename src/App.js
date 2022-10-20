@@ -44,7 +44,6 @@ export default function App() {
   }
 
   async function fetchDocs() {
-    console.log(token);
     const allDocs = await docsModel.getAllDocs(token)
     // const allDocs = await docsModel.graphQlAllDocs(token)
 
