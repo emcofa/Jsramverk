@@ -42,7 +42,9 @@ const docsModel = {
                 text
             })
         }).then(res => res.json())
-            .then(data => console.log('data returned:', data));
+            .then(data => {
+                return data.response.message
+            });
     },
     graphQlSaveDocs: async function graphQlSaveDocs(newDoc, token) {
         fetch(`${docsModel.baseUrlGraphql}/graphql`, {

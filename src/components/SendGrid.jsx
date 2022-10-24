@@ -13,8 +13,12 @@ const Message = (props) => {
         let doc = props.getCurrentDoc.name
         let text = "http://www.student.bth.se/~emfh21/editor/"
         console.log(usersName, email, access, doc, text);
-        await docsModel.postData(usersName, email, access, doc, text);
-        alert(`Email sent to ${access}.`);
+        let data = await docsModel.postData(usersName, email, access, doc, text);
+        if (data === "success") {
+            alert(`Email sent to ${access}.`);
+        } else {
+            alert("Could not send email.");
+        }
         props.setTrigger(false)
     }
 
@@ -24,7 +28,7 @@ const Message = (props) => {
                 <div className="popup-inner">
                     <p>
                         <strong>
-                            Would you also like to send an email invitation?
+                            Would you also like to email an invitation?
                         </strong>
                     </p>
                     <input className="login-input" type="name" placeholder="Name" onChange={(e) => setName(e.target.value)} />
