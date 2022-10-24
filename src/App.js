@@ -34,10 +34,12 @@ export default function App() {
 
     const loginResult = await authModel.login(user);
 
-    if (loginResult.data.token) {
+    console.log(loginResult);
+
+    if (loginResult.data) {
       setToken(loginResult.data.token);
     } else {
-      alert(loginResult.data.message)
+      alert(loginResult.errors.message)
     }
     setUser(loginResult);
     return loginResult
@@ -45,7 +47,6 @@ export default function App() {
 
   async function fetchDocs() {
     const allDocs = await docsModel.getAllDocs(token)
-    // const allDocs = await docsModel.graphQlAllDocs(token)
 
     setDocs(allDocs);
   }
@@ -54,7 +55,7 @@ export default function App() {
     (async () => {
       await fetchDocs();
     })();
-  }, [token]);
+  }, [token]);// eslint-disable-line react-hooks/exhaustive-deps
 
   function changeHandler(event) {
     let newObject = {};
