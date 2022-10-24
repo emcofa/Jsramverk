@@ -12,8 +12,8 @@ const Message = (props) => {
         let access = props.access
         let doc = props.getCurrentDoc.name
         let text = "http://www.student.bth.se/~emfh21/editor/"
-        console.log(usersName, email, access, doc, text);
         let data = await docsModel.postData(usersName, email, access, doc, text);
+
         if (data === "success") {
             alert(`Email sent to ${access}.`);
         } else {

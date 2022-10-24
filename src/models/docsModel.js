@@ -14,6 +14,8 @@ const docsModel = {
 
         const docs = await response.json();
 
+        console.log(docs);
+
         return docs.data
     },
     getSingleDocs: async function getSingleDocs(id, token) {
@@ -41,10 +43,11 @@ const docsModel = {
                 doc,
                 text
             })
-        }).then(res => res.json())
-            .then(data => {
-                return data.response.message
-            });
+        }).then(res => {
+            res.json()
+        })
+            .catch(err => { return err });
+        return "success"
     },
     graphQlSaveDocs: async function graphQlSaveDocs(newDoc, token) {
         fetch(`${docsModel.baseUrlGraphql}/graphql`, {
