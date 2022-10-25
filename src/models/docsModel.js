@@ -14,8 +14,6 @@ const docsModel = {
 
         const docs = await response.json();
 
-        console.log(docs);
-
         return docs.data
     },
     getSingleDocs: async function getSingleDocs(id, token) {
@@ -97,8 +95,6 @@ const docsModel = {
             } }` })
         })
             .then(r => r.json())
-            .then(data => console.log('data returned:', data));
-
     },
 
 }

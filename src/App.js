@@ -37,16 +37,22 @@ export default function App() {
     if (loginResult.data) {
       setToken(loginResult.data.token);
     } else {
-      alert(loginResult.errors.message)
+      alert(loginResult.errors.message);
     }
     setUser(loginResult);
-    return loginResult
+    return loginResult;
   }
 
   async function fetchDocs() {
-    const allDocs = await docsModel.getAllDocs(token)
+    if (token) {
+      const allDocs = await docsModel.getAllDocs(token);
 
-    setDocs(allDocs);
+      setDocs(allDocs);
+      console.log("All documents fetched")
+    }
+    // const allDocs = await docsModel.getAllDocs(token)
+
+    // setDocs(allDocs);
   }
 
   useEffect(() => {
@@ -71,7 +77,7 @@ export default function App() {
       {token ?
         <div className="trix-container">
           <Routes>
-            <Route exact path="/" element={<Home data-testid="child" />} />
+            <Route exact path="/" element={<Home data-testid="child" user={user.data} />} />
             <Route path="/docs/new" element={<NewDoc submitFunction={fetchDocs} user={user.data} token={token} />} />
             <Route path="/docs/update" element={<UpdateDoc submitFunction={fetchDocs} docs={docs} user={user.data} token={token} />} />
           </Routes>
