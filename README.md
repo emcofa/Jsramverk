@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# Collaborative Text Editor App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a React app that includes a frontend for a collaborative text editor built using Trix editor. The app allows multiple users to edit the same document in real-time and see each other's changes as they are being made. Users are required to create an account and log in using JWT authentication, and they have the ability to save documents as PDF files.
 
-## Available Scripts
+## Getting Started
 
-In the project directory, you can run:
+To get started with the app, follow these steps:
 
-### `npm start`
+1. Clone the repository to your local machine using git clone https://github.com/your-username/your-repo.git.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. Navigate to the project directory using cd your-repo.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. Install the dependencies using npm install.
 
-### `npm test`
+4. Start the development server using npm start. This will start the app on localhost:3000.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Using the App
 
-### `npm run build`
+Once the app is running, you can use the collaborative text editor to edit a document with other users in real-time. Here are the steps to use the app:
+1. Open the app in your web browser by navigating to http://localhost:3000.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Type some text into the editor to start editing the document.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Share the app URL with other users so they can join the document and start collaborating.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. As you and other users make changes to the document, you will see the changes in real-time.
 
-### `npm run eject`
+## Contributing
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+If you would like to contribute to the app, follow these steps:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Fork the repository to your own GitHub account.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. Clone the repository to your local machine using git clone https://github.com/your-username/your-forked-repo.git.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. Navigate to the project directory using cd your-forked-repo.
 
-## Learn More
+4. Install the dependencies using npm install.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5. Make your changes to the code.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+6. Test your changes using npm test.
 
-### Code Splitting
+7. Commit your changes using git commit -m "Your commit message".
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+8. Push your changes to your GitHub account using git push.
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+9. Create a pull request on the original repository.
