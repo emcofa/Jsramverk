@@ -1,6 +1,6 @@
 # Collaborative Text Editor App
 
-This is a React app that includes a frontend for a collaborative text editor built using Trix editor. The app allows multiple users to edit the same document in real-time and see each other's changes as they are being made. Users are required to create an account and log in using JWT authentication, and they have the ability to save documents as PDF files.
+This is a React app that includes a frontend for a collaborative text editor built using Trix editor. The app was created as part of the "JavaScript Frameworks" course at Blekinge Institute of Technology. The app allows multiple users to edit the same document in real-time and see each other's changes as they are being made. Users are required to create an account and log in using JWT authentication, and they have the ability to save documents as PDF files.
 
 ## Getting Started
 
